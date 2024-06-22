@@ -1,70 +1,67 @@
-import { AnimatedSprite, Graphics, LineStyle, Sprite, TextStyle, Texture } from "pixi.js";
+
+import { Graphics } from "pixi.js";
 import { Scene } from "./Scene";
-import { Globals, ResultData, currentGameData, style } from "./Globals";
-import { config } from "./appConfig";
 import { TextLabel } from "./TextLabel";
-import { Slots } from "./Slots";
-import { LineGenerator, Lines } from "./lines";
-import { UiContainer } from "./UiContainer";
-import { UiPopups } from "./UiPopups";
+import { Globals } from "./Globals";
 
 
 export class MainScene extends Scene {
 
-	slot: Slots;
-	slotFrame: Sprite;
-	lineGenerator: LineGenerator;
-	uiContainer: UiContainer;
-	uiPopups: UiPopups;
-	constructor() {
-		super();
+    constructor() {
+        super();
 
-		this.slotFrame = new Sprite(Globals.resources.frame.texture);
-		this.slotFrame.anchor.set(0.5);
-		this.slotFrame.position.set(config.logicalWidth / 2, config.logicalHeight / 2);
-		this.mainContainer.addChild(this.slotFrame);
+        const spin = new Graphics()
+        spin.beginFill(0xFFFFFF)
+        spin.drawRoundedRect(0,0,200,100,20)
+        spin.endFill();
+        this.mainContainer.addChild(spin);
+        spin.position.set(window.innerWidth/2,window.innerHeight/2);
 
-		this.uiContainer = new UiContainer(()=>this.onSpinCallBack());
-		this.slotFrame.addChild(this.uiContainer);
-		this.slot = new Slots(() => this.onResultCallBack());
-		this.lineGenerator = new LineGenerator(this.slot.slotSymbols[0][0].symbol.height, this.slot.slotSymbols[0][0].symbol.width);
-		this.slotFrame.addChild(this.lineGenerator);
-		this.slotFrame.addChild(this.slot);
+        spin.interactive = true;
+        spin.buttonMode = true;
 
-		this.uiPopups  = new UiPopups();
-		this.mainContainer.addChild(this.uiPopups);
+        const Data = {
+            CurrentBet : 5,
+			spins : 100000
+        }
 
-	}
+        // const Data={
+        //     collect: false
+        // }
 
-	onResultCallBack() {
-		this.uiContainer.onSpin(false);
-		this.uiContainer.setFire(false);
-		this.lineGenerator.showLines(ResultData.gameData.linesToEmit);
+        spin.on("pointerdown",()=>{Globals.Socket?.sendMessage("SPIN",Data)})
 
-	}
 
-	onSpinCallBack()
-	{
-		this.slot.moveReel();
-		this.lineGenerator.hideLines();
-	}
+        const genRTP = new Graphics()
+        genRTP.beginFill(0xFFFFFF)
+        genRTP.drawRoundedRect(0,0,200,100,20)
+        genRTP.endFill();
+        this.mainContainer.addChild(genRTP);
+        genRTP.addChild(new TextLabel(0,0,0.5,"RTP",20,0x000000))
+        genRTP.position.set(window.innerWidth/2,window.innerHeight/1.5);
 
-	resize(): void {
-		super.resize();
-	}
+        genRTP.interactive = true;
+        genRTP.buttonMode = true;
 
-	update(dt: number): void {
-		this.slot.update(dt);
-	}
 
-	recievedMessage(msgType: string, msgParams: any): void {
-		if (msgType == "ResultData") {
-			setTimeout(()=>{
-				this.uiContainer.currentWiningText.updateLabelText(ResultData.playerData.currentWining.toString());
-				currentGameData.currentBalance =  ResultData.playerData.Balance;
-				this.uiContainer.currentBalanceText.updateLabelText(currentGameData.currentBalance.toString())
-				this.slot.stopTween()},1000);
-					
-		}
-	}
+        // const Data={
+        //     collect: false
+        // }
+	
+        genRTP.on("pointerdown",()=>{Globals.Socket?.sendMessage("GENRTP",Data)})
+        // spin.on("pointerdown",()=>{sendMessage("gamble",Data)})
+    }
+
+    resize(): void {
+    super.resize();
+
+    }
+    update(dt: number): void { 
+
+    }
+
+    recievedMessage(msgType: string, msgParams: any): void {
+
+    }
 }
+﻿

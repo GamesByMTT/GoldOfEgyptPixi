@@ -21,7 +21,8 @@ if(token!== null) {
 }
 
 
-const socketUrl = "https://game-crm-rtp-backend.onrender.com/";
+const socketUrl = "http://localhost:5000";
+
 export class SocketManager {
   private socket;
 
@@ -32,12 +33,14 @@ export class SocketManager {
     } else {
       console.log("Token not found");
     }
-   let  authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhdXJhdiIsImRlc2lnbmF0aW9uIjoiY29tcGFueSIsImlhdCI6MTcxODQ0ODE3MywiZXhwIjoxNzE5MDUyOTczfQ.ERbN8pla0bYN8Lk7Dq_GLuNY6OI_KZrtIqpfFSziaDU";
-    this.socket = io(socketUrl, {
+   let  authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBsYXllcjEiLCJkZXNpZ25hdGlvbiI6InBsYXllciIsImlhdCI6MTcxODg2NDgzNywiZXhwIjoxNzE5NDY5NjM3fQ.5YzU2xBzmCZfor42A4uAcfUyFATtPfxyAlSCfn77QAs";
+   
+   this.socket = io(socketUrl, {
       auth: {
         token: authToken,
       },
     });
+    console.log(socketUrl);
 
     this.setupEventListeners();
   }
@@ -55,7 +58,7 @@ export class SocketManager {
         JSON.stringify({
           id: "AUTH",
           Data: {
-            GameID: "SL-VIK",
+            GameID: "SL-GCT",
           },
         })
       );
@@ -77,6 +80,11 @@ export class SocketManager {
               console.log(ResultData);
               Globals.emitter?.Call("ResultData");
             }
+            if(data.id == "FREESPIN")
+              {
+                console.log("CALLED FREESPIN");
+                
+              }
       });
     });
 
