@@ -4,9 +4,10 @@ import { Globals, ResultData, currentGameData, style } from "./Globals";
 import { config } from "./appConfig";
 import { TextLabel } from "./TextLabel";
 import { Slots } from "./Slots";
-import { LineGenerator, Lines } from "./lines";
-import { UiContainer } from "./UiContainer";
+
 import { UiPopups } from "./UiPopups";
+import { LineGenerator } from "./Lines";
+import { UIContainer } from "./UIContainer";
 
 
 export class MainScene extends Scene {
@@ -14,7 +15,7 @@ export class MainScene extends Scene {
 	slot: Slots;
 	slotFrame: Sprite;
 	lineGenerator: LineGenerator;
-	uiContainer: UiContainer;
+	uiContainer: UIContainer;
 	uiPopups: UiPopups;
 	constructor() {
 		super();
@@ -24,7 +25,7 @@ export class MainScene extends Scene {
 		this.slotFrame.position.set(config.logicalWidth / 2, config.logicalHeight / 2);
 		this.mainContainer.addChild(this.slotFrame);
 
-		this.uiContainer = new UiContainer(()=>this.onSpinCallBack());
+		this.uiContainer = new UIContainer(()=>this.onSpinCallBack());
 		this.slotFrame.addChild(this.uiContainer);
 		this.slot = new Slots(() => this.onResultCallBack());
 		this.lineGenerator = new LineGenerator(this.slot.slotSymbols[0][0].symbol.height, this.slot.slotSymbols[0][0].symbol.width);
@@ -39,7 +40,7 @@ export class MainScene extends Scene {
 	onResultCallBack() {
 		this.uiContainer.onSpin(false);
 		this.uiContainer.setFire(false);
-		this.lineGenerator.showLines(ResultData.gameData.linesToEmit);
+		this.lineGenerator.showLines([1,2,3]);
 
 	}
 

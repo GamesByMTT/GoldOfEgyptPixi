@@ -5,7 +5,7 @@ import { config } from "./appConfig";
 import { Socket } from "socket.io-client";
 import { stringify } from "querystring";
 
-export class UiContainer extends Container
+export class UIContainer extends Container
 {
 	spinBtn!: AnimatedSprite;
 	maxbetBtn!: AnimatedSprite;
@@ -32,7 +32,7 @@ export class UiContainer extends Container
     }
     lineBtnInit()
     {
-
+		
 		const linePanel = new Sprite(Globals.resources.lines.texture);
 		linePanel.anchor.set(0.5);
 		linePanel.position.set(-config.logicalWidth/2 +  linePanel.width, this.spinBtn.position.y);
@@ -57,7 +57,7 @@ export class UiContainer extends Container
 						{
 							currentGameData.currentLines = 0;
 						}
-						CurrentLineText.updateLabelText( initData.gameData.LinesCount[currentGameData.currentLines])
+						CurrentLineText.updateLabelText( initData.gameData.LinesCount[currentGameData.currentLines].toString())
 					}
 		 })
 		pBtn.on("pointerup", () => { pBtn.gotoAndStop(0); })
@@ -81,7 +81,7 @@ export class UiContainer extends Container
 							currentGameData.currentLines = initData.gameData.LinesCount.length-1;
 						}
 						
-						CurrentLineText.updateLabelText( initData.gameData.LinesCount[currentGameData.currentLines])
+						CurrentLineText.updateLabelText( initData.gameData.LinesCount[currentGameData.currentLines].toString())
 					}
 					})
 					mBtn.on("pointerup", () => { mBtn.gotoAndStop(0); })
@@ -233,7 +233,7 @@ export class UiContainer extends Container
 					{
 						currentGameData.currentBetIndex = 0;
 					}
-					this.CurrentBetText .updateLabelText( initData.gameData.Bets[currentGameData.currentBetIndex])
+					this.CurrentBetText .updateLabelText( initData.gameData.Bets[currentGameData.currentBetIndex].toString())
 				}
 		 })
 		pBtn.on("pointerup", () => { pBtn.gotoAndStop(0); })
@@ -257,7 +257,7 @@ export class UiContainer extends Container
 						currentGameData.currentBetIndex = initData.gameData.Bets.length-1;
 					}
 					
-					this.CurrentBetText .updateLabelText( initData.gameData.Bets[currentGameData.currentBetIndex]);
+					this.CurrentBetText .updateLabelText( initData.gameData.Bets[currentGameData.currentBetIndex].toString());
 				}
 				})
 		mBtn.on("pointerup", () => { mBtn.gotoAndStop(0); })

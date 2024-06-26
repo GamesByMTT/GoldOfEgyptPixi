@@ -70,7 +70,7 @@ export class App {
 		this.app.stage.addChild(loaderContainer);
 
 		const loader = new Loader(this.app.loader, loaderContainer);
-		Globals.Socket = new SocketManager(() => {
+		// Globals.Socket = new SocketManager(() => {
 			loader.preload().then(() => {
 				loader.preloadSounds(() => {
 					setTimeout(() => {
@@ -78,7 +78,7 @@ export class App {
 					}, 1000);
 				});
 			});
-		  });
+		//   });
 	   
 
 		this.tabChange();

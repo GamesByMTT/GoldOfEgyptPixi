@@ -37,7 +37,7 @@ export const currentGameData = {
   won : 0,
   AutoPlay: 0,
   currentLines : 0,
-  currentBalance : 0,
+  currentBalance : 50,
   isMoving : false,
 }
 
@@ -45,14 +45,14 @@ export const initData = {
   gameData : {
     Reel : [[]],
     BonusData : [],
-    Bets : [],
-    LinesCount : [],
+    Bets : [1,2,3,4,5],
+    LinesCount : [1, 5, 15, 20],
     autoSpin : [],
     Lines : [[]],
 
   },
   playerData : {
-    Balance : 0,
+    Balance : 1000,
     haveWon : 0,
     currentWining : 0,
     currentBet : 0,
@@ -68,8 +68,8 @@ export const ResultData = {
     freeSpins:  0,
     isBonus:  false,
     jackpot:  0,
-    linesToEmit:[],
-    symbolsToEmit: [],
+    linesToEmit:[1,2,5],
+    symbolsToEmit: ["0,1","1,1","0,2"],
   },
   playerData : {
     Balance : 0,

@@ -40,23 +40,18 @@ export class Slots extends Container {
     };
     // console.log(initData.gameData.Reel);
 
-    for (let i = 0; i < initData.gameData.Reel.length; i++) {
+    for (let i = 0; i < 5; i++) {
       this.slotSymbols[i] = [];
-      for (let j = 0; j < initData.gameData.Reel[0].length; j++) {
-        const slot: symbols = new symbols(initData.gameData.Reel[i][j], {
-          x: i,
-          y: j,
-        });
-        slot.symbol.mask = this.slotMask;
-        slot.symbol.position.set(
-          startPos.x + slot.symbol.width / 2 + (slot.symbol.width * i) / 1.15,
-          startPos.y - slot.symbol.height / 2 - (slot.symbol.height * j) / 1.14
-        );
-        slot.startY = slot.symbol.position.y;
-        this.slotSymbols[i].push(slot);
-        this.addChild(this.slotSymbols[i][j].symbol);
+      for (let j = 0; j < 18; j++) {
+          const slot = new symbols(getRandomIntBetween(0, 12),{x : i, y: j});
+          slot.symbol.position.set(startPos.x + slot.symbol.width / 2 + slot.symbol.width * i / 1.15, startPos.y - slot.symbol.height / 2 - slot.symbol.height * j / 1.14);
+          slot.startY = slot.symbol.position.y;
+          slot.symbol.mask = this.slotMask;
+          this.slotSymbols[i].push(slot);
+          this.addChild(this.slotSymbols[i][j].symbol);
       }
-    }
+  }
+
 
     let sprites: Texture<Resource>[] = [];
     for (let i = 0; i < 23; i++) {
@@ -68,7 +63,7 @@ export class Slots extends Container {
       }
     }
   }
-
+ 
   moveReel() {
     for (let i = 0; i < this.slotSymbols.length; i++) {
       for (let j = 0; j < this.slotSymbols[i].length; j++) {
@@ -79,7 +74,7 @@ export class Slots extends Container {
       }
     }
     this.moveSlots = true;
-    // setTimeout(() => { this.stopTween(); }, 5000);
+    setTimeout(() => { this.stopTween(); }, 3000);
   }
 
   stopTween() {
@@ -93,19 +88,33 @@ export class Slots extends Container {
         setTimeout(() => {
           this.resultCallBack();
           this.moveSlots = false;
-          ResultData.gameData.symbolsToEmit.forEach((rowArray: any) => {
-            rowArray.forEach((row: any) => {
-              // console.log('Processing:', row); // Debugging: Log each row being processed
-              if (typeof row === "string") {
-                const [x, y]: number[] = row
-                  .split(",")
-                  .map((value) => parseInt(value));
-                // console.log('Parsed Coordinates:', { x, y }); // Debugging: Log parsed coordinates
-                // console.log(this.slotSymbols[(x)][2-y]);
-                this.slotSymbols[x][2 - y].playAnimation();
-              }
-            });
-          });
+          // ResultData.gameData.symbolsToEmit.forEach((rowArray: any) => {
+          //   rowArray.forEach((row: any) => {
+          //     // console.log('Processing:', row); // Debugging: Log each row being processed
+          //     if (typeof row === "string") {
+          //       const [x, y]: number[] = row
+          //         .split(",")
+          //         .map((value) => parseInt(value));
+          //       // console.log('Parsed Coordinates:', { x, y }); // Debugging: Log parsed coordinates
+          //       // console.log(this.slotSymbols[(x)][2-y]);
+          //       this.slotSymbols[x][2 - y].playAnimation();
+          //     }
+          //   });
+          // });
+                this.slotSymbols[0][0].playAnimation();
+                this.slotSymbols[1][0].playAnimation();
+                this.slotSymbols[2][0].playAnimation();
+                this.slotSymbols[3][0].playAnimation();
+                this.slotSymbols[4][0].playAnimation();
+                this.slotSymbols[1][1].playAnimation();
+                this.slotSymbols[2][1].playAnimation();
+                this.slotSymbols[3][1].playAnimation();
+                this.slotSymbols[0][2].playAnimation();
+                this.slotSymbols[1][2].playAnimation();
+                this.slotSymbols[2][2].playAnimation();
+                this.slotSymbols[3][2].playAnimation();
+                this.slotSymbols[4][2].playAnimation();
+
         }, 1000);
     }
     console.log(ResultData);
@@ -213,7 +222,7 @@ class symbols {
       // console.log(ResultData.gameData.ResultReel[0]);
 
       const elementId =
-        ResultData.gameData.ResultReel[2 - this.Index.y][this.Index.x];
+       getRandomIntBetween(0,12);
       for (let i = 0; i < 23; i++) {
         const texture = Globals.resources[`slots${elementId}_${i}`]?.texture;
         if (texture) {
