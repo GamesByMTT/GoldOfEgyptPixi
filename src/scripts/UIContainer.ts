@@ -74,9 +74,9 @@ export class UiContainer extends Container {
         ) {
           currentGameData.currentLines = 0;
         }
-        CurrentLineText.updateLabelText(
-          initData.gameData.LinesCount[currentGameData.currentLines]
-        );
+        // CurrentLineText.updateLabelText(
+        //   initData.gameData.LinesCount[currentGameData.currentLines].toString()
+        // );
       }
     });
     pBtn.on("pointerup", () => {
@@ -109,9 +109,9 @@ export class UiContainer extends Container {
             initData.gameData.LinesCount.length - 1;
         }
 
-        CurrentLineText.updateLabelText(
-          initData.gameData.LinesCount[currentGameData.currentLines]
-        );
+        // CurrentLineText.updateLabelText(
+        //   initData.gameData.LinesCount[currentGameData.currentLines].toString()
+        // );
       }
     });
     mBtn.on("pointerup", () => {
@@ -368,9 +368,9 @@ export class UiContainer extends Container {
         if (currentGameData.currentBetIndex >= initData.gameData.Bets.length) {
           currentGameData.currentBetIndex = 0;
         }
-        this.CurrentBetText.updateLabelText(
-          initData.gameData.Bets[currentGameData.currentBetIndex]
-        );
+        // this.CurrentBetText.updateLabelText(
+        //   initData.gameData.Bets[currentGameData.currentBetIndex].toString()
+        // );
       }
     });
     pBtn.on("pointerup", () => {
@@ -402,9 +402,9 @@ export class UiContainer extends Container {
           currentGameData.currentBetIndex = initData.gameData.Bets.length - 1;
         }
 
-        this.CurrentBetText.updateLabelText(
-          initData.gameData.Bets[currentGameData.currentBetIndex]
-        );
+        // this.CurrentBetText.updateLabelText(
+        //   initData.gameData.Bets[currentGameData.currentBetIndex].toString()
+        // );
       }
     });
     mBtn.on("pointerup", () => {

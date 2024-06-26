@@ -21,7 +21,8 @@ export class MainScene extends Scene {
         spin.buttonMode = true;
 
         const Data = {
-            CurrentBet : 5,
+            currentBet : 5,
+			lines : 20,
 			spins : 100000
         }
 
