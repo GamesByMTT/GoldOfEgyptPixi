@@ -24,7 +24,7 @@ export class MainScene extends Scene {
 
         const Data = {
             currentBet : 0, //SEND THE INDEX OF Multiplier 0,1,2,3
-            // lines : 20,
+            currentLines : 20,
             spins : 100000
         }
 

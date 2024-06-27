@@ -33,7 +33,7 @@ export class SocketManager {
     } else {
       console.log("Token not found");
     }
-   let  authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBsYXllcjEiLCJkZXNpZ25hdGlvbiI6InBsYXllciIsImlhdCI6MTcxODg2NDgzNywiZXhwIjoxNzE5NDY5NjM3fQ.5YzU2xBzmCZfor42A4uAcfUyFATtPfxyAlSCfn77QAs";
+   let  authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBsYXllcjEiLCJkZXNpZ25hdGlvbiI6InBsYXllciIsImlhdCI6MTcxOTQ3OTM1NywiZXhwIjoxNzIwMDg0MTU3fQ.UzQoyNlT8MfXs7sSuSt8QilV7UJb629VdXCRsnIrDVI";
    
    this.socket = io(socketUrl, {
       auth: {
