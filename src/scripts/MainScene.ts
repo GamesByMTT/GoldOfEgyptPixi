@@ -1,4 +1,3 @@
-
 import { Graphics } from "pixi.js";
 import { Scene } from "./Scene";
 import { TextLabel } from "./TextLabel";
@@ -9,6 +8,9 @@ export class MainScene extends Scene {
 
     constructor() {
         super();
+        ////__
+        // export const betMultiplier = [0.1,0.5,0.7,1] These Are the Multpliers SEE ITT
+        ////__
 
         const spin = new Graphics()
         spin.beginFill(0xFFFFFF)
@@ -21,9 +23,9 @@ export class MainScene extends Scene {
         spin.buttonMode = true;
 
         const Data = {
-            currentBet : 5,
-			lines : 20,
-			spins : 100000
+            currentBet : 0, //SEND THE INDEX OF Multiplier 0,1,2,3
+            // lines : 20,
+            spins : 100000
         }
 
         // const Data={
@@ -48,7 +50,7 @@ export class MainScene extends Scene {
         // const Data={
         //     collect: false
         // }
-	
+
         genRTP.on("pointerdown",()=>{Globals.Socket?.sendMessage("GENRTP",Data)})
         // spin.on("pointerdown",()=>{sendMessage("gamble",Data)})
     }
@@ -65,4 +67,3 @@ export class MainScene extends Scene {
 
     }
 }
-﻿
