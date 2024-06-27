@@ -4,9 +4,10 @@ import { Globals, ResultData, currentGameData, style } from "./Globals";
 import { config } from "./appConfig";
 import { TextLabel } from "./TextLabel";
 import { Slots } from "./Slots";
-import { LineGenerator, Lines } from "./lines";
-import { UiContainer } from "./UiContainer";
+
 import { UiPopups } from "./UiPopups";
+import { UiContainer } from "./UIContainer";
+import { LineGenerator } from "./Lines";
 
 
 export class MainScene extends Scene {
