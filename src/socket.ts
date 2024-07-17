@@ -3,18 +3,18 @@ import { Globals, ResultData, initData } from "./scripts/Globals";
 
 function getToken() {
   let cookieArr = document.cookie.split("; ");
-  for(let i = 0; i < cookieArr.length; i++) {
-      let cookiePair = cookieArr[i].split("=");
-      if('token' === cookiePair[0]) {
-          return decodeURIComponent(cookiePair[1]);
-      }
+  for (let i = 0; i < cookieArr.length; i++) {
+    let cookiePair = cookieArr[i].split("=");
+    if ('token' === cookiePair[0]) {
+      return decodeURIComponent(cookiePair[1]);
+    }
   }
   return null;
 }
 
 // Usage example
 let token = getToken();
-if(token!== null) {
+if (token !== null) {
   console.log("Token:", token);
 } else {
   console.log("Token not found");
@@ -26,16 +26,16 @@ const socketUrl = "http://localhost:5000";
 export class SocketManager {
   private socket;
 
-  constructor(private onInitDataReceived: () => void) { 
+  constructor(private onInitDataReceived: () => void) {
     const token = getToken();
-    if(token!== null) {
+    if (token !== null) {
       console.log("Token:", token);
     } else {
       console.log("Token not found");
     }
-   let  authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBsYXllcjEiLCJkZXNpZ25hdGlvbiI6InBsYXllciIsImlhdCI6MTcxOTQ3OTM1NywiZXhwIjoxNzIwMDg0MTU3fQ.UzQoyNlT8MfXs7sSuSt8QilV7UJb629VdXCRsnIrDVI";
-   
-   this.socket = io(socketUrl, {
+    let authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGU3ODRkYWNmNmNiYjRmMjAzOTNmMiIsInVzZXJuYW1lIjoicml0aWsiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzIxMDM5NjI5LCJleHAiOjE3MjExMjYwMjl9.jYvep52qoeRJ8mF0QFl0ggEC0oCy3LNuEwttfrDbQfA";
+
+    this.socket = io(socketUrl, {
       auth: {
         token: authToken,
       },
@@ -58,7 +58,7 @@ export class SocketManager {
         JSON.stringify({
           id: "AUTH",
           Data: {
-            GameID: "SL-GCT",
+            GameID: "SL-CRM",
           },
         })
       );
@@ -66,25 +66,22 @@ export class SocketManager {
       this.socket.on("message", (message) => {
         const data = JSON.parse(message);
         console.log(`Message ID : ${data.id} |||||| Message Data : ${JSON.stringify(data.message)}`);
-        if(data.id == "InitData")
-          {
-            this.onInitDataReceived();
-            initData.gameData = data.message.GameData;
-            initData.playerData = data.message.PlayerData;
-            console.log(initData);
-          }
-          if(data.id == "ResultData")
-            {
-              ResultData.gameData = data.message.GameData;
-              ResultData.playerData = data.message.PlayerData;
-              console.log(ResultData);
-              Globals.emitter?.Call("ResultData");
-            }
-            if(data.id == "FREESPIN")
-              {
-                console.log("CALLED FREESPIN");
-                
-              }
+        if (data.id == "InitData") {
+          this.onInitDataReceived();
+          initData.gameData = data.message.GameData;
+          initData.playerData = data.message.PlayerData;
+          console.log(initData);
+        }
+        if (data.id == "ResultData") {
+          ResultData.gameData = data.message.GameData;
+          ResultData.playerData = data.message.PlayerData;
+          console.log(ResultData);
+          Globals.emitter?.Call("ResultData");
+        }
+        if (data.id == "FREESPIN") {
+          console.log("CALLED FREESPIN");
+
+        }
       });
     });
 
@@ -94,30 +91,30 @@ export class SocketManager {
   }
 
 
- // Add this method to the SocketManager class in socket.ts
+  // Add this method to the SocketManager class in socket.ts
 
-authenticate(): Promise<void> {
+  authenticate(): Promise<void> {
     return new Promise((resolve, reject) => {
-        this.socket.on("connect", () => {
-            console.log("Connected to the server");
+      this.socket.on("connect", () => {
+        console.log("Connected to the server");
 
-            this.socket.emit(
-                "AUTH",
-                JSON.stringify({
-                    id: "AUTH",
-                    Data: {
-                        GameID: "SL-GF",
-                    },
-                })
-            );
+        this.socket.emit(
+          "AUTH",
+          JSON.stringify({
+            id: "AUTH",
+            Data: {
+              GameID: "SL-GF",
+            },
+          })
+        );
 
-        });
+      });
     });
-}
+  }
   messages(message: any) {
     console.log(message);
   }
-  sendMessage(id : string, message: any) {
+  sendMessage(id: string, message: any) {
     this.socket.emit(
       "message",
       JSON.stringify({ id: id, data: message })

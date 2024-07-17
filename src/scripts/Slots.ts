@@ -44,12 +44,12 @@ export class Slots extends Container {
       this.slotSymbols[i] = [];
       for (let j = 0; j < initData.gameData.Reel[0].length; j++) {
         let slot: slotSymbolSprite = new slotSymbolSprite(initData.gameData.Reel[i][j]);
-        if(j < 3)
-            {
-                slot = new symbols(initData.gameData.Reel[i][j], {
-                    x: i,
-                    y: j,})
-            }
+        if (j < 3) {
+          slot = new symbols(initData.gameData.Reel[i][j], {
+            x: i,
+            y: j,
+          })
+        }
         slot.symbol.mask = this.slotMask;
         slot.symbol.position.set(
           startPos.x + slot.symbol.width / 2 + (slot.symbol.width * i) / 1.15,
@@ -121,7 +121,7 @@ export class Slots extends Container {
           this.slotSymbols[i][j].update(dt);
           if (
             this.slotSymbols[i][j].symbol.position.y +
-              this.slotSymbols[i][j].symbol.height * 1.5 >=
+            this.slotSymbols[i][j].symbol.height * 1.5 >=
             2000
           ) {
             if (j == 0) {
@@ -130,7 +130,7 @@ export class Slots extends Container {
                   .position.y -
                 this.slotSymbols[i][this.slotSymbols[i].length - 1].symbol
                   .height /
-                  2;
+                2;
             } else {
               this.slotSymbols[i][j].symbol.position.y =
                 this.slotSymbols[i][j - 1].symbol.position.y -
@@ -144,36 +144,36 @@ export class Slots extends Container {
 }
 
 class slotSymbolSprite {
-    symbol : Sprite;
-    startY: number = 0;
-    startMoving: boolean = false;
-    endMoving: boolean = false;
+  symbol: Sprite;
+  startY: number = 0;
+  startMoving: boolean = false;
+  endMoving: boolean = false;
 
-    constructor(elementId: number) {
-        this.symbol = new Sprite(Globals.resources[`slots${elementId}_${0}`]?.texture);
-        this.symbol.anchor.set(0.5);
-        // this.animationSpeed = 0.3;
-        // this.symbol.play();
-        // this.shouldAnimationPlay(true);
+  constructor(elementId: number) {
+    this.symbol = new Sprite(Globals.resources[`slots${elementId}_${0}`]?.texture);
+    this.symbol.anchor.set(0.5);
+    // this.animationSpeed = 0.3;
+    // this.symbol.play();
+    // this.shouldAnimationPlay(true);
 
+  }
+
+  endTween() {
+    this.startMoving = false;
+    const tween = new Tween(this.symbol.position)
+      .to({ y: this.startY }, 400)
+      .easing(Easing.Elastic.Out)
+      .start();
+  }
+
+  update(dt: number) {
+    if (this.startMoving) {
+      const deltaY = 80 * dt;
+      const newY = this.symbol.position.y + deltaY;
+      // Clamp the new Y position to prevent excessive movement
+      this.symbol.position.y = Math.max(newY, this.symbol.position.y);
     }
-
-    endTween() {
-        this.startMoving = false;
-        const tween = new Tween( this.symbol.position)
-            .to({ y: this.startY }, 400)
-            .easing(Easing.Elastic.Out)
-            .start();
-    }
-
-    update(dt: number) {
-        if (this.startMoving) {
-            const deltaY = 80 * dt;
-            const newY =  this.symbol.position.y + deltaY;
-            // Clamp the new Y position to prevent excessive movement
-            this.symbol.position.y = Math.max(newY,  this.symbol.position.y);
-        }
-    }
+  }
 }
 
 class symbols {
@@ -197,10 +197,10 @@ class symbols {
     this.symbol.anchor.set(0.5);
     this.Index = Index;
     this.symbol.animationSpeed = 0.3;
-   
-      const textures = [this.symbol.texture, this.symbol.texture];
-      this.symbol.textures = textures;
-    
+
+    const textures = [this.symbol.texture, this.symbol.texture];
+    this.symbol.textures = textures;
+
   }
 
   playAnimation() {
@@ -230,7 +230,7 @@ class symbols {
     new Tween(this.symbol.position)
       .to({ y: this.startY }, 400)
       .easing(Easing.Elastic.Out)
-      .onComplete(() => {})
+      .onComplete(() => { })
       .start();
     // if (this.Index.y < 3) this.symbol.play();
   }
