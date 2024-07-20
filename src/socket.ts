@@ -34,7 +34,6 @@ export class SocketManager {
       console.log("Token not found");
     }
     let authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGU3ODRkYWNmNmNiYjRmMjAzOTNmMiIsInVzZXJuYW1lIjoicml0aWsiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzIxMDM5NjI5LCJleHAiOjE3MjExMjYwMjl9.jYvep52qoeRJ8mF0QFl0ggEC0oCy3LNuEwttfrDbQfA";
-
     this.socket = io(socketUrl, {
       auth: {
         token: authToken,
@@ -50,39 +49,24 @@ export class SocketManager {
       console.error("Connection Error:", error.message);
     });
 
-    this.socket.on("connect", () => {
-      console.log("Connected to the server");
-
-      this.socket.emit(
-        "AUTH",
-        JSON.stringify({
-          id: "AUTH",
-          Data: {
-            GameID: "SL-CRM",
-          },
-        })
-      );
-
-      this.socket.on("message", (message) => {
-        const data = JSON.parse(message);
-        console.log(`Message ID : ${data.id} |||||| Message Data : ${JSON.stringify(data.message)}`);
-        if (data.id == "InitData") {
-          this.onInitDataReceived();
-          initData.gameData = data.message.GameData;
-          initData.playerData = data.message.PlayerData;
-          console.log(initData);
+    this.socket.on('connect', () => {
+      console.log('Connected to the server');
+      this.socket.on('socketState', (state: boolean) => {
+        if (state) {
+          this.socket.emit(
+            "AUTH",
+            JSON.stringify({
+              id: "AUTH",
+              Data: {
+                GameID: "SL-CRM",
+              },
+            })
+          );
         }
-        if (data.id == "ResultData") {
-          ResultData.gameData = data.message.GameData;
-          ResultData.playerData = data.message.PlayerData;
-          console.log(ResultData);
-          Globals.emitter?.Call("ResultData");
-        }
-        if (data.id == "FREESPIN") {
-          console.log("CALLED FREESPIN");
 
-        }
-      });
+      })
+
+
     });
 
     this.socket.on("internalError", (errorMessage: string) => {
