@@ -62,10 +62,14 @@ export class SocketManager {
               },
             })
           );
+
+
         }
 
       })
-
+      this.socket.on('Test', (socket) => {
+        console.log(`user connected with ${socket.username}  is sending message`)
+      })
 
     });
 
