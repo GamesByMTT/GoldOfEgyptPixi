@@ -67,9 +67,27 @@ export class SocketManager {
         }
 
       })
-      this.socket.on('Test', (socket) => {
-        console.log(`user connected with ${socket.username}  is sending message`)
-      })
+      this.socket.on("message", (message) => {
+        const data = JSON.parse(message);
+        console.log(`Message ID : ${data.id} |||||| Message Data : ${JSON.stringify(data.message)}`);
+        if (data.id == "InitData") {
+          this.onInitDataReceived();
+          initData.gameData = data.message.GameData;
+          initData.playerData = data.message.PlayerData;
+          console.log(initData);
+        }
+        if (data.id == "ResultData") {
+          ResultData.gameData = data.message.GameData;
+          ResultData.playerData = data.message.PlayerData;
+          console.log(ResultData);
+          Globals.emitter?.Call("ResultData");
+        }
+        if (data.id == "FREESPIN") {
+          console.log("CALLED FREESPIN");
+
+        }
+      });
+
 
     });
 
