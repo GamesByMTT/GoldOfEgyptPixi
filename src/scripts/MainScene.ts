@@ -18,14 +18,14 @@ export class MainScene extends Scene {
         spin.endFill();
         this.mainContainer.addChild(spin);
         spin.position.set(window.innerWidth / 2, window.innerHeight / 2);
-
+        spin.addChild(new TextLabel(spin.width / 2, spin.height / 2, 0.5, "SPIN", 20, 0x000000))
         spin.interactive = true;
         spin.buttonMode = true;
 
         const Data = {
-            currentBet: 0,
+            currentBet: 4,
             currentLines: 20,
-            spins: 1
+            spins: 100
         }
 
         // const Data={
@@ -40,7 +40,7 @@ export class MainScene extends Scene {
         genRTP.drawRoundedRect(0, 0, 200, 100, 20)
         genRTP.endFill();
         this.mainContainer.addChild(genRTP);
-        genRTP.addChild(new TextLabel(0, 0, 0.5, "RTP", 20, 0x000000))
+        genRTP.addChild(new TextLabel(genRTP.width / 2, genRTP.height / 2, 0.5, "RTP", 20, 0x000000))
         genRTP.position.set(window.innerWidth / 2, window.innerHeight / 1.5);
 
         genRTP.interactive = true;

@@ -109,7 +109,7 @@ export class SocketManager {
           JSON.stringify({
             id: "AUTH",
             Data: {
-              GameID: "SL-GF",
+              GameID: "SL-CRM",
             },
           })
         );
