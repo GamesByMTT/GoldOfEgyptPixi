@@ -11,7 +11,6 @@ export class MainScene extends Scene {
         ////__
         // export const betMultiplier = [0.1,0.5,0.7,1] These Are the Multpliers SEE ITT
         ////__
-
         const spin = new Graphics()
         spin.beginFill(0xFFFFFF)
         spin.drawRoundedRect(0, 0, 200, 100, 20)
@@ -23,9 +22,10 @@ export class MainScene extends Scene {
         spin.buttonMode = true;
 
         const Data = {
-            currentBet: 4,
-            currentLines: 20,
-            spins: 100
+            currentBet: 0,
+            currentLines: 25,
+            spins: 1,
+            // matrixX: 1
         }
 
         // const Data={

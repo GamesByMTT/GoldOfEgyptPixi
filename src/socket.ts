@@ -33,13 +33,14 @@ export class SocketManager {
     } else {
       console.log("Token not found");
     }
-    let authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGU3ODRkYWNmNmNiYjRmMjAzOTNmMiIsInVzZXJuYW1lIjoicml0aWsiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzIxMDM5NjI5LCJleHAiOjE3MjExMjYwMjl9.jYvep52qoeRJ8mF0QFl0ggEC0oCy3LNuEwttfrDbQfA";
+    let authToken = token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjc1YWFmN2EyZWEwYTUxNDdkOTQwOSIsInVzZXJuYW1lIjoicmFodWx0ZXN0Iiwicm9sZSI6InBsYXllciIsImlhdCI6MTcyNDQ3ODEyNSwiZXhwIjoxNzI1MDgyOTI1fQ.GSCbtWC2rRSYwpZDGgv1v8eifHqfAmeqLrzfPuQU3rI";
     this.socket = io(socketUrl, {
       auth: {
         token: authToken,
+        gameId: ""
       },
     });
-    console.log(socketUrl);
+
 
     this.setupEventListeners();
   }
@@ -58,7 +59,7 @@ export class SocketManager {
             JSON.stringify({
               id: "AUTH",
               Data: {
-                GameID: "SL-CRM",
+                GameID: "",
               },
             })
           );
@@ -67,6 +68,7 @@ export class SocketManager {
         }
 
       })
+
       this.socket.on("message", (message) => {
         const data = JSON.parse(message);
         console.log(`Message ID : ${data.id} |||||| Message Data : ${JSON.stringify(data.message)}`);
@@ -79,7 +81,6 @@ export class SocketManager {
         if (data.id == "ResultData") {
           ResultData.gameData = data.message.GameData;
           ResultData.playerData = data.message.PlayerData;
-          console.log(ResultData);
           Globals.emitter?.Call("ResultData");
         }
         if (data.id == "FREESPIN") {
@@ -91,6 +92,9 @@ export class SocketManager {
 
     });
 
+    this.socket.on("alert", (errorMessage: string) => {
+      console.log("ALERTTT ", errorMessage);
+    });
     this.socket.on("internalError", (errorMessage: string) => {
       console.log(errorMessage);
     });
@@ -109,7 +113,7 @@ export class SocketManager {
           JSON.stringify({
             id: "AUTH",
             Data: {
-              GameID: "SL-CRM",
+              GameID: "",
             },
           })
         );

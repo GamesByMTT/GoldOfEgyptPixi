@@ -20,16 +20,16 @@ export class App {
 	app: PIXI.Application;
 	constructor() {
 		// create canvas
-		
+
 		PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
 
-		this.app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, antialias: true,powerPreference: 'high-performance', });
-		this.app = new PIXI.Application({width : window.innerWidth, height : window.innerHeight});
-		document.body.appendChild( Globals.fpsStats.dom );
+		this.app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, antialias: true, powerPreference: 'high-performance', });
+		this.app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight });
+		document.body.appendChild(Globals.fpsStats.dom);
 		Globals.fpsStats.dom.style.position = 'absolute';
 		Globals.fpsStats.dom.style.left = '40px';
 		Globals.fpsStats.dom.style.top = '40px';
-		
+
 		// document.body.appendChild( Globals.stats.dom );
 
 		CalculateScaleFactor();
@@ -44,11 +44,11 @@ export class App {
 
 		//Setting Up Window On Resize Callback
 		window.onresize = (e) => {
-			
+
 			CalculateScaleFactor();
 			this.app.renderer.resize(window.innerWidth, window.innerHeight);
 			document.body.removeChild(this.app.view);
-			
+
 			this.app.renderer.view.style.width = `${window.innerWidth}px`;
 			this.app.renderer.view.style.height = `${window.innerHeight}px`;
 			SceneManager.instance!.resize();
@@ -70,37 +70,35 @@ export class App {
 		this.app.stage.addChild(loaderContainer);
 
 		const loader = new Loader(this.app.loader, loaderContainer);
-		Globals.Socket = new SocketManager(() => {
-			loader.preload().then(() => {
-				loader.preloadSounds(() => {
+		loader.preload().then(() => {
+			loader.preloadSounds(() => {
+				Globals.Socket = new SocketManager(() => {
 					setTimeout(() => {
 						this.startScene(loaderContainer);
 					}, 1000);
 				});
 			});
-		  });
-	   
+		});
+
 
 		this.tabChange();
 		document.body.appendChild(this.app.view);
 	}
-	startScene(loaderContainer : PIXI.Container)
-	{
-		if(loaderContainer)
-			{
-				loaderContainer.destroy();
-				SceneManager.instance!.start(new MainScene());
-			}
+	startScene(loaderContainer: PIXI.Container) {
+		if (loaderContainer) {
+			loaderContainer.destroy();
+			SceneManager.instance!.start(new MainScene());
+		}
 	}
 
 	tabChange() {
 		document.addEventListener("visibilitychange", (event) => {
-		if (document.hidden) {
-			Globals.emitter?.Call("pause");
+			if (document.hidden) {
+				Globals.emitter?.Call("pause");
 
-		} else {
-			Globals.emitter?.Call("resume");
-		}
+			} else {
+				Globals.emitter?.Call("resume");
+			}
 		});
 	}
 
