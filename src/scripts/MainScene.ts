@@ -22,9 +22,9 @@ export class MainScene extends Scene {
         spin.buttonMode = true;
 
         const Data = {
-            currentBet: 0,
-            currentLines: 25,
-            spins: 1,
+            currentBet: 13,
+            currentLines: 20,
+            spins: 10000,
             // matrixX: 1
         }
 
